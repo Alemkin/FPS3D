@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4495624285596559009}
+  - component: {fileID: 725067645}
   m_Layer: 0
   m_Name: Look Root
   m_TagString: Untagged
@@ -33,6 +34,28 @@ Transform:
   m_Father: {fileID: 4495624286721778735}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &725067645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4495624285596559008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0635a8b1ca261304db907434c09796b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerRoot: {fileID: 4495624286721778735}
+  _lookRoot: {fileID: 4495624285596559009}
+  _invert: 0
+  _canUnlock: 1
+  _sensitivity: 5
+  _smoothSteps: 10
+  _smoothWeight: 0.4
+  _rollAngle: 0
+  _rollSpeed: 3
+  _defaultLookLimits: {x: -70, y: 80}
 --- !u!1 &4495624285854341382
 GameObject:
   m_ObjectHideFlags: 0
