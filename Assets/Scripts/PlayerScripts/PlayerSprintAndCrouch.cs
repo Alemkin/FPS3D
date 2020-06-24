@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.PlayerScripts;
+using UnityEngine;
 
 public class PlayerSprintAndCrouch : MonoBehaviour
 {
@@ -14,10 +15,26 @@ public class PlayerSprintAndCrouch : MonoBehaviour
 
     private bool _isCrouching;
 
+    private PlayerFootsteps _playerFootsteps;
+    private float _sprintVolume = 1f;
+    private float _crouchVolume = 0.1f;
+    private float _walkVolumeMin = 0.2f, _walkVolumeMax = 0.6f;
+    private float _walkStepDistance = 0.4f;
+    private float _sprintStepDistance = 0.25f;
+    private float _crouchStepDistance = 0.5f;
+
+    void Start()
+    {
+        _playerFootsteps.VolumeMin = _walkVolumeMin;
+        _playerFootsteps.VolumeMax = _walkVolumeMax;
+        _playerFootsteps.StepDistance = _walkStepDistance;
+    }
+
     void Awake()
     {
         _playerMovement = GetComponent<PlayerMovement>();
         _lookRoot = transform.GetChild(0);
+        _playerFootsteps = GetComponentInChildren<PlayerFootsteps>();
     }
 
     void Update()
@@ -31,11 +48,17 @@ public class PlayerSprintAndCrouch : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftShift) && !_isCrouching)
         {
             _playerMovement.Speed = SprintSpeed;
+            _playerFootsteps.VolumeMin = _sprintVolume;
+            _playerFootsteps.VolumeMax = _sprintVolume;
+            _playerFootsteps.StepDistance = _sprintStepDistance;
         }
 
         if (Input.GetKeyUp(KeyCode.LeftShift) && !_isCrouching)
         {
             _playerMovement.Speed = MoveSpeed;
+            _playerFootsteps.VolumeMin = _walkVolumeMin;
+            _playerFootsteps.VolumeMax = _walkVolumeMax;
+            _playerFootsteps.StepDistance = _walkStepDistance;
         }
     }
 
@@ -48,14 +71,27 @@ public class PlayerSprintAndCrouch : MonoBehaviour
                 _lookRoot.localPosition = new Vector3(0f, _standHeight, 0f);
                 _playerMovement.Speed = MoveSpeed;
                 _isCrouching = false;
+                _playerFootsteps.VolumeMin = _walkVolumeMin;
+                _playerFootsteps.VolumeMax = _walkVolumeMax;
+                _playerFootsteps.StepDistance = _walkStepDistance;
             }
             else
             {
                 _lookRoot.localPosition = new Vector3(0f, _crouchHeight, 0f);
                 _playerMovement.Speed = CrouchSpeed;
                 _isCrouching = true;
+                _playerFootsteps.VolumeMin = _crouchVolume;
+                _playerFootsteps.VolumeMax = _crouchVolume;
+                _playerFootsteps.StepDistance = _crouchStepDistance;
 
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space) && _isCrouching)
+        {
+            _lookRoot.localPosition = new Vector3(0f, _standHeight, 0f);
+            _playerMovement.Speed = MoveSpeed;
+            _isCrouching = false;
         }
     }
 }

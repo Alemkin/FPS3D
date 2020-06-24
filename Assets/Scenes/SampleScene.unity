@@ -148,7 +148,7 @@ Light:
     m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
-    m_Strength: 0.4
+    m_Strength: 0.76
     m_Bias: 0.05
     m_NormalBias: 0.4
     m_NearPlane: 0.2
@@ -245,6 +245,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2518884866870076574, guid: 469ecf06b56951f409f8f6b695e92c97,
+        type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2518884866870076574, guid: 469ecf06b56951f409f8f6b695e92c97,
+        type: 3}
+      propertyPath: BypassReverbZones
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4495624286721778734, guid: 469ecf06b56951f409f8f6b695e92c97,
         type: 3}
       propertyPath: m_Name

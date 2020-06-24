@@ -13,8 +13,7 @@ namespace Assets.Scripts.PlayerScripts
         [SerializeField]
         private bool _canUnlock = true;
 
-        [SerializeField]
-        private float _sensitivity = 5f;
+        public float Sensitivity = 5f;
 
         [SerializeField]
         private int _smoothSteps = 10;
@@ -74,8 +73,8 @@ namespace Assets.Scripts.PlayerScripts
         {
             _currentMouseLook = new Vector2(Input.GetAxis(MouseAxis.MOUSE_Y), Input.GetAxis(MouseAxis.MOUSE_X));
 
-            _lookAngles.x += _currentMouseLook.x * _sensitivity * (_invert ? 1f : -1f);
-            _lookAngles.y += _currentMouseLook.y * _sensitivity;
+            _lookAngles.x += _currentMouseLook.x * Sensitivity * (_invert ? 1f : -1f);
+            _lookAngles.y += _currentMouseLook.y * Sensitivity;
 
             _lookAngles.x = Mathf.Clamp(_lookAngles.x, _defaultLookLimits.x, _defaultLookLimits.y);
 
