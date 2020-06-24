@@ -16,6 +16,7 @@ public class PlayerSprintAndCrouch : MonoBehaviour
     private bool _isCrouching;
 
     private PlayerFootsteps _playerFootsteps;
+    private CharacterController _characterController;
     private float _sprintVolume = 1f;
     private float _crouchVolume = 0.1f;
     private float _walkVolumeMin = 0.2f, _walkVolumeMax = 0.6f;
@@ -35,6 +36,7 @@ public class PlayerSprintAndCrouch : MonoBehaviour
         _playerMovement = GetComponent<PlayerMovement>();
         _lookRoot = transform.GetChild(0);
         _playerFootsteps = GetComponentInChildren<PlayerFootsteps>();
+        _characterController = GetComponent<CharacterController>();
     }
 
     void Update()
@@ -45,15 +47,13 @@ public class PlayerSprintAndCrouch : MonoBehaviour
 
     void Sprint()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift) && !_isCrouching)
+        if (Input.GetKey(KeyCode.LeftShift) && !_isCrouching && _characterController.isGrounded)
         {
             _playerMovement.Speed = SprintSpeed;
             _playerFootsteps.VolumeMin = _sprintVolume;
             _playerFootsteps.VolumeMax = _sprintVolume;
             _playerFootsteps.StepDistance = _sprintStepDistance;
-        }
-
-        if (Input.GetKeyUp(KeyCode.LeftShift) && !_isCrouching)
+        } else if (!_isCrouching && _characterController.isGrounded)
         {
             _playerMovement.Speed = MoveSpeed;
             _playerFootsteps.VolumeMin = _walkVolumeMin;
