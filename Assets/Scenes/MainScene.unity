@@ -181,6 +181,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &465794757 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4495624286721778734, guid: 469ecf06b56951f409f8f6b695e92c97,
+    type: 3}
+  m_PrefabInstance: {fileID: 4495624285983703516}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &465794763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 465794757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29958b02ec56f2c49995adcbcb737e68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FireRate: 15
+  Damage: 20
 --- !u!1001 &843250105
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -319,6 +339,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4495624287430720185, guid: 469ecf06b56951f409f8f6b695e92c97,
+        type: 3}
+      propertyPath: m_TagString
+      value: Axe
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 469ecf06b56951f409f8f6b695e92c97, type: 3}
