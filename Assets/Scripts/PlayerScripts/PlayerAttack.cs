@@ -12,6 +12,8 @@ namespace Assets.Scripts.PlayerScripts
         public float Damage = 20f;
 
         private float _nextTimeToFire;
+        private float _nextTimeToLaunchSpear;
+        private float _nextTimeToLaunchArrow;
         private Animator _zoomCameraAnim;
         private bool _isZoomed;
 
@@ -20,6 +22,15 @@ namespace Assets.Scripts.PlayerScripts
         private GameObject _crossHair;
 
         private bool _isAiming;
+
+        [SerializeField]
+        private GameObject _arrowPrefab, _spearPrefab;
+
+        [SerializeField]
+        private Transform _arrowStartPosition;
+
+        [SerializeField]
+        private Transform _spearStartPosition;
 
         // Start is called before the first frame update
         void Awake()
@@ -47,7 +58,7 @@ namespace Assets.Scripts.PlayerScripts
 
                 currentWeapon.AttackAnimation();
 
-                //BulletFired();
+                BulletFired();
             }
             else if (Input.GetMouseButtonDown(0))
             {
@@ -60,17 +71,18 @@ namespace Assets.Scripts.PlayerScripts
                 {
                     currentWeapon.AttackAnimation();
 
-                    //BulletFired();
+                    BulletFired();
                 }
                 else if (_isAiming)
                 {
                     //Arrow or Spear
-                    currentWeapon.AttackAnimation();
                     switch (currentWeapon.BulletType)
                     {
                         case WeaponBulletType.Arrow:
+                            ThrowArrowOrSpear(true);
                             break;
                         case WeaponBulletType.Spear:
+                            ThrowArrowOrSpear(false);
                             break;
                     }
                 }
@@ -106,6 +118,36 @@ namespace Assets.Scripts.PlayerScripts
                     currentWeapon.Aim(false);
                     _isAiming = false;
                 }
+            }
+        }
+
+        void ThrowArrowOrSpear(bool throwArrow)
+        {
+            if (throwArrow && Time.time > _nextTimeToLaunchArrow)
+            {
+                _weaponManager.GetCurrentSelectedWeapon().AttackAnimation();
+                _nextTimeToLaunchArrow = Time.time + 2.8f;
+                GameObject arrow = Instantiate(_arrowPrefab);
+                arrow.transform.position = _arrowStartPosition.position;
+
+                arrow.GetComponent<ArrowAndSpearHandler>().Launch(_mainCamera);
+            }
+            else if (!throwArrow && Time.time > _nextTimeToLaunchSpear)
+            {
+                _weaponManager.GetCurrentSelectedWeapon().AttackAnimation();
+                _nextTimeToLaunchSpear = Time.time + 3.2f;
+                GameObject spear = Instantiate(_spearPrefab);
+                spear.transform.position = _spearStartPosition.position;
+
+                spear.GetComponent<ArrowAndSpearHandler>().Launch(_mainCamera);
+            }
+        }
+
+        void BulletFired()
+        {
+            if (Physics.Raycast(_mainCamera.transform.position, _mainCamera.transform.forward, out var hit))
+            {
+                print("We hit: " + hit.transform.gameObject.name);
             }
         }
     }
