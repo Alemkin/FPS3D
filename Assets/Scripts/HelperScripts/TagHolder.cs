@@ -31,6 +31,8 @@ public class Tags
     public const string ARROW_TAG = "Arrow";
 
     public const string AXE_TAG = "Axe";
+    public const string SHOTGUN_TAG = "Shotgun";
+    public const string REVOLVER_TAG = "Revolver";
 
     public const string PLAYER_TAG = "Player";
     public const string ENEMY_TAG = "Enemy";

@@ -11,8 +11,11 @@ namespace Assets.Scripts.PlayerScripts
         public float FireRate = 15f;
         public float Damage = 20f;
 
-        private float _nextTimeToFire;
+        private float _nextTimeToFireAssault;
+        private float _nextTimeToFireRevolver;
+        private float _nextTimeToFireShotgun;
         private float _nextTimeToLaunchSpear;
+        private float _nextTimeToSwingAxe;
         private float _nextTimeToLaunchArrow;
         private Animator _zoomCameraAnim;
         private bool _isZoomed;
@@ -52,9 +55,9 @@ namespace Assets.Scripts.PlayerScripts
         void ShootWeapon()
         {
             var currentWeapon = _weaponManager.GetCurrentSelectedWeapon();
-            if (currentWeapon.FireType == WeaponFireType.Multiple && Input.GetMouseButton(0) && Time.time > _nextTimeToFire)
+            if (currentWeapon.FireType == WeaponFireType.Multiple && Input.GetMouseButton(0) && Time.time > _nextTimeToFireAssault)
             {
-                _nextTimeToFire = Time.time + 1f / FireRate;
+                _nextTimeToFireAssault = Time.time + 1f / FireRate;
 
                 currentWeapon.AttackAnimation();
 
@@ -62,18 +65,27 @@ namespace Assets.Scripts.PlayerScripts
             }
             else if (Input.GetMouseButtonDown(0))
             {
-                if (currentWeapon.tag == Tags.AXE_TAG)
+                if (currentWeapon.tag == Tags.AXE_TAG && Time.time > _nextTimeToSwingAxe)
                 {
+                    _nextTimeToSwingAxe = Time.time + 1f;
                     currentWeapon.AttackAnimation();
                 }
 
-                if (currentWeapon.BulletType == WeaponBulletType.Bullet)
+                if (currentWeapon.tag == Tags.REVOLVER_TAG && Time.time > _nextTimeToFireRevolver)
                 {
+                    _nextTimeToFireRevolver = Time.time + 1f;
                     currentWeapon.AttackAnimation();
 
                     BulletFired();
                 }
-                else if (_isAiming)
+                else if (currentWeapon.tag == Tags.SHOTGUN_TAG && Time.time > _nextTimeToFireShotgun)
+                {
+                    _nextTimeToFireShotgun = Time.time + 1.8f;
+                    currentWeapon.AttackAnimation();
+
+                    BulletFired();
+                }
+                else if (_isAiming && currentWeapon.BulletType != WeaponBulletType.Bullet)
                 {
                     //Arrow or Spear
                     switch (currentWeapon.BulletType)
